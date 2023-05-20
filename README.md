@@ -50,7 +50,7 @@ exit 0
 ### Script explanation (by ChatGPT)
 This shell script checks if the device is connected to a BT Wi-Fi hotspot, and if not, attempts to connect. The script first defines several functions: hasBTWiFi(), checkConnection(), checkLoginServer(), doLogin(), and doRestartWWAN().
 
-The hasBTWiFi() function checks if the device is connected to a BT Wi-Fi hotspot by using the iwinfo command to get a list of available wireless networks and then grepping for "BTWi-fi". If the device is connected to the hotspot, it returns 0, otherwise it returns 4.
+The hasBTWiFi() function checks if the device is connected to a BT Wi-Fi hotspot by using the uci command to get a list of available wireless networks and then grepping for "BTWi-fi". If the device is connected to the hotspot, it returns 0, otherwise it returns 4.
 
 The checkConnection() function pings a DNS server to test internet connectivity. If the ping is successful, it returns 0, otherwise it returns 4.
 
