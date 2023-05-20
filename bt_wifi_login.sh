@@ -26,20 +26,19 @@ parseCommandLine() {
         -h | --help)
             cat <<EOF
 $processName - A simple shell script to automate BT Wi-Fi logins.
-Copyright (C) 2017, 2018 Tony Corbett, G0WFV
 
 Usage:
 $processName [-h|--help] [-s|--syslog] [-t|--timeout n] [-d|--debug] [wait]
 
 Options:
--h --help         Display this help
--s --syslog       Log result to syslog
--t n --timeout n  Wait n seconds for a reply [default 30]
--d --debug        Enable debug logging
-wait              An integer value to wait between checks.
-                  The script will loop continuously checking your login
-                  status. Without it, the script will check once and
-                  terminate.
+-h   --help         Display this help
+-s   --syslog       Log result to syslog
+-t n --timeout n    Wait n seconds for a reply [default 30]
+-d   --debug        Enable debug logging
+wait                An integer value to wait between checks.
+                    The script will loop continuously checking your login
+                    status. Without it, the script will check once and
+                    terminate.
 
 EOF
             exit 0
@@ -72,7 +71,7 @@ EOF
 }
 
 # This function checks if the device is connected to a BT Wi-fi hotspot.
-# It uses the iwinfo command to get information about the available 
+# It uses the uci command to get information about the available 
 # wireless networks and greps for "BTWi-fi" in the output.
 # If "BTWi-fi" is found, it means that the device is connected to a 
 # BT Wi-fi hotspot, and the function returns 0.
@@ -81,7 +80,7 @@ EOF
 # The function also has optional debug and syslog flags to print messages
 # to the console or log messages to the system logger.
 hasBTWiFi() {
-    myssid=$(iwinfo | grep "BTWi-fi")
+    myssid=$(uci show wireless | grep "BTWi-fi")
     if [ -n "$myssid" ]; then
         [ $debug ] && echo "Connected to BT Wi-fi hotspot."
         [ $debug ] && [ $syslog ] && /usr/bin/logger -t "$processName[$pid]" "Connected to BT Wi-fi hotspot."
@@ -132,13 +131,15 @@ checkLoginServer() {
         return 6
     fi
 
-    if [ echo "$foo" | grep -q 'You may have lost your connection to the BTWiFi signal' ]; then
+    test=$(echo "$foo" | grep 'You may have lost your connection to the BTWiFi signal')
+    if [ -n "$test" ]; then
         [ $debug ] && echo "Not connected to a BT Wi-fi hotspot."
         [ $syslog ] && /usr/bin/logger -t "$processName[$pid]" "Not connected to a BT Wi-fi hotspot."
         return 6
     fi
 
-    if [ echo "$foo" | grep -q 'now logged in with BT Wi-fi' ]; then
+    test=$(echo "$foo" | grep 'now logged in with BT Wi-fi')
+    if [ -n "$test" ]; then
         [ $debug ] && echo "Already logged in. Nowt to do!"
         [ $debug ] && [ $syslog ] && /usr/bin/logger -t "$processName[$pid]" "Already logged in. Nowt to do!"
         return 0
