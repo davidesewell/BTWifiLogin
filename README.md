@@ -32,7 +32,7 @@ opkg install wget
 Place `bt_wifi_login.sh` in a convenient location and edit the `user` and `pass` variables to suit.
 
 ````
-wget https://raw.githubusercontent.com/davidesewell/BTWiFiLogin/master/bt_wifi_login.sh
+wget https://github.com/davidesewell/BTWifiLogin/releases/download/v0.0.1/bt_wifi_login.sh
 chmod a+x bt_wifi_login.sh
 ````
 
