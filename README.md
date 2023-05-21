@@ -1,4 +1,4 @@
-# BTLogin
+# BTWiFiLogin
 
 This is a fork of [g0wfv/BTLogin](https://github.com/g0wfv/BTLogin) by [Tony Corbett](https://github.com/g0wfv)
 
