@@ -7,7 +7,7 @@ BTWifiLogin is a simple shell script to automate BT Wi-Fi logins in a headless e
 ### Usage
 
 ````
-bt_login.sh [-h|--help] [-s|--syslog] [-t|--timeout n] [-d|--debug] [wait]
+bt_wifi_login.sh [-h|--help] [-s|--syslog] [-t|--timeout n] [-d|--debug] [wait]
 
     Options:
         -h      --help         Display this help
